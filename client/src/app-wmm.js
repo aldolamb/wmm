@@ -6,6 +6,7 @@ import { Shop } from "./shop";
 import { Header } from "./header";
 import { Contact } from "./contact";
 import { SmokeFree } from "./smoke-free";
+import { Subscribe } from "./subscribe";
 
 const Intro = () => <a href="/feed"><img src={logo} alt="WMM" className="logo"/></a>;
 const Error = () => <h1>404..</h1>;
@@ -21,6 +22,7 @@ export class WMM extends React.Component {
                         <Route path='/shop'         component={Shop} />
                         <Route path='/contact'      component={Contact} />
                         <Route path='/smoke-free'   component={SmokeFree} />
+                        <Route path='/subscribe'    component={Subscribe} />
                         <Route exact path='/'       component={Intro} />
                         <Route path='*'             component={Error} />
                     </Switch>

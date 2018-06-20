@@ -76,6 +76,20 @@ app.post('/send', function (req, res) {
 });
 
 
+app.post('/subscribe', function (req, res) {
+    const email = req.body.email;
+
+    if (email) {
+        res.json({
+            msg: 'fail'
+        })
+    } else {
+        res.json({
+            msg: email
+        })
+    }
+});
+
 server = app.listen(5000, () => {
     console.log('Server is listening on port: ', server.address().port);
 });
