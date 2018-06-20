@@ -1,35 +1,60 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-app.use(bodyParser.json());
 const sgTransport = require('nodemailer-sendgrid-transport');
 
 const nodemailer = require('nodemailer');
 const creds = require('./config/config');
 
-app.post('/login', function (req, res) {
-    const email = req.body.email;
-    const pwd = req.body.pwd;
-    con.query(queries.login(email), function (err, result) {
-        if (err) throw err;
-        if (result[0]) {
-            bcrypt.compare(pwd, result[0].pwd, function (error, response) {
-                if (response) {
-                    req.session.nameFirst = result[0].name_first;
-                    res.send(result[0].name_first);
-                    console.log(req.session);
-                }
-            })
-        } else {
-            res.send('');
-        }
-    });
+
+const firebase = require("firebase");
+firebase.initializeApp(creds.FIREBASECONNECTION);
+// Firebase App is always required and must be first
+const admin = require('firebase-admin');
+require('firebase/auth');
+require('firebase/database');
+require('firebase/storage');
+
+const auth = firebase.auth();
+
+app.use(bodyParser.json());
+const database = firebase.database();
+const ref = database.ref();
+const rootBeerRef = ref.child('RootBeers');
+const pageLength = 2;
+// const db = firebase.initializeApp(creds.FIREBASECONNECTION);
+
+auth.onAuthStateChanged(function(user) {
+  if (user) {
+    console.log("signed in")
+  } else {
+    console.log("signed out")
+  }
 });
 
-app.post('/log_out', (req, res) => {
-    req.session.destroy();
-    res.sendStatus(200);
-});
+// app.post('/login', function (req, res) {
+//     const email = req.body.email;
+//     const pwd = req.body.pwd;
+//     con.query(queries.login(email), function (err, result) {
+//         if (err) throw err;
+//         if (result[0]) {
+//             bcrypt.compare(pwd, result[0].pwd, function (error, response) {
+//                 if (response) {
+//                     req.session.nameFirst = result[0].name_first;
+//                     res.send(result[0].name_first);
+//                     console.log(req.session);
+//                 }
+//             })
+//         } else {
+//             res.send('');
+//         }
+//     });
+// });
+
+// app.post('/log_out', (req, res) => {
+//     req.session.destroy();
+//     res.sendStatus(200);
+// });
 
 const options = {
     auth: {
@@ -79,16 +104,62 @@ app.post('/send', function (req, res) {
 app.post('/subscribe', function (req, res) {
     const email = req.body.email;
 
-    if (email) {
+    const data = [];
+
+    const ref = database.ref('Posts');
+    ref.once('value').then(function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            // console.log(childData);
+            data.push(childData);
+        });
+        res.json({msg: data});
+        // if (data) {
+        //     res.json({
+        //         msg: 'fail'
+        //     })
+        // } else {
+        //     res.json({
+        //         msg: email
+        //     })
+        // }
+    });
+    // ref.on('value', function(snapshot) {
+    //     snapshot.forEach(function(childSnapshot) {
+    //       var childData = childSnapshot.val();
+    //       console.log(childData);
+    //     });
+    // });
+
+
+    // if (email) {
+    //     res.json({
+    //         msg: 'fail'
+    //     })
+    // } else {
+    //     res.json({
+    //         msg: email
+    //     })
+    // }
+});
+
+
+
+app.post('/login', function (req, res) {
+    const password = req.body.password;
+
+    auth.signInWithEmailAndPassword('jlamberti2015@gmail.com', password)
+    .then(function() {
+        res.json({
+            msg: 'success'
+        })
+    })
+    .catch(function(error) {
         res.json({
             msg: 'fail'
         })
-    } else {
-        res.json({
-            msg: email
-        })
-    }
-});
+    });
+});   
 
 server = app.listen(5000, () => {
     console.log('Server is listening on port: ', server.address().port);

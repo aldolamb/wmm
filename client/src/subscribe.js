@@ -17,7 +17,7 @@ export class Subscribe extends React.Component {
                 } else if (response.data.msg === 'fail') {
                     alert("Message failed to send.")
                 } else {
-                    alert(response.data.msg);
+                    alert(response.data.msg.map(x => x.Title + x.Subject));
                 }
             })
             .catch(function (error) {
