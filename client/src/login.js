@@ -12,10 +12,12 @@ export class Login extends React.Component {
         })
             .then(function (response) {
                 if (response.data.msg === 'success') {
-                    alert("Logged In");
+                    // alert("Logged In");
+                    sessionStorage.setItem("loggedIn", true);
                     self.resetForm();
                 } else if (response.data.msg === 'fail') {
-                    alert("Log In Failed")
+                    sessionStorage.setItem("loggedIn", false);
+                    // alert("Log In Failed")
                 }
             })
             .catch(function (error) {
@@ -32,7 +34,7 @@ export class Login extends React.Component {
             <div className="contact">
                 <form id="contact-form" onSubmit={this.handleSubmit.bind(this)} method="POST">
                     <div className="form-group">
-                        <input type="text" className="form-control" id="password" autoComplete="off" />
+                        <input type="password" className="form-control" id="password" autoComplete="off" />
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>

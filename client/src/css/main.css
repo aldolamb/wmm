@@ -80,6 +80,7 @@ h6 {
     position: relative;
     margin: auto;
     width: 43vw;
+    box-sizing: border-box;
 }
     .feed > div {
         margin: 1em 0;
@@ -88,6 +89,23 @@ h6 {
         box-sizing: border-box;
         height: max-content;
         text-align: left;
+    }
+
+    .feed > div * {
+        position: relative;
+        display: block;
+        margin: 1em 0;
+        /*padding: .5em;*/
+        box-sizing: border-box;
+    }
+
+    .feed input {
+        width: 50%;
+    }
+
+    .feed textarea {
+        width: 100%;
+        max-width: 100%;
     }
 
 

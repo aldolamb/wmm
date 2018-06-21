@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const sgTransport = require('nodemailer-sendgrid-transport');
+const expressSessions = require('express-session');
+app.use(expressSessions({secret: 'apt318', saveUninitialized: false, resave: false}));
 
 const nodemailer = require('nodemailer');
 const creds = require('./config/config');
@@ -105,7 +107,9 @@ app.post('/subscribe', function (req, res) {
     const email = req.body.email;
 
     const data = [];
-
+    if(req.session.loggedIn) {
+        console.log("IT WORKED");
+    }
     const ref = database.ref('Posts');
     ref.once('value').then(function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
@@ -150,16 +154,24 @@ app.post('/login', function (req, res) {
 
     auth.signInWithEmailAndPassword('jlamberti2015@gmail.com', password)
     .then(function() {
+        req.session.loggedIn = true;
         res.json({
             msg: 'success'
         })
     })
     .catch(function(error) {
+        req.session.loggedIn = false;
         res.json({
             msg: 'fail'
         })
     });
-});   
+});
+
+app.post('/log_out', (req, res) => {
+    req.session.destroy();
+    res.sendStatus(200);
+    console.log('destroyed');
+});
 
 server = app.listen(5000, () => {
     console.log('Server is listening on port: ', server.address().port);

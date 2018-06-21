@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Feed } from "./feed";
 import logo from './img/wmm.png';
@@ -13,6 +14,28 @@ const Intro = () => <a href="/feed"><img src={logo} alt="WMM" className="logo"/>
 const Error = () => <h1>404..</h1>;
 
 export class WMM extends React.Component {
+    // componentWillUnmount() {
+    //     axios.post('/log_out')
+    //         .catch(function(error) {
+    //             if (error)
+    //                 console.log(error);
+    //         });
+    // }
+
+    componentDidMount() {
+        window.addEventListener('onclose', () =>{
+            axios.post('/log_out')
+                .catch(function(error) {
+                    if (error)
+                        console.log(error);
+                });
+        });
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('onclose', "")
+    }
+
     render() {
         return (
             <div className="main">
