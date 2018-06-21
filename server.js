@@ -102,6 +102,33 @@ app.post('/send', function (req, res) {
     })
 });
 
+app.post('/feed', (req, res) => {
+    const data = [];
+    ref.once('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            console.log("HERE");
+            Object.keys(childData).forEach((child) => console.log(child))
+            data.push(childData);
+        });
+        res.json(data[0]);
+    });
+});
+
+app.post('/upload', (req, res) => {
+    const postTitle = req.body.PostTitle;
+    const postSubtitle = req.body.PostSubtitle;
+    const postBody = req.body.PostBody;
+    const postAll = {
+        Title: req.body.PostTitle,
+        Subtitle: req.body.PostSubtitle,
+        Body: req.body.PostBody
+    }
+
+    const ref = database.ref('Posts');
+    database.ref('Posts').push(postAll);
+});
+
 
 app.post('/subscribe', function (req, res) {
     const email = req.body.email;

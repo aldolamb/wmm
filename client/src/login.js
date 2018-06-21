@@ -14,7 +14,8 @@ export class Login extends React.Component {
                 if (response.data.msg === 'success') {
                     // alert("Logged In");
                     sessionStorage.setItem("loggedIn", true);
-                    self.resetForm();
+                    self.props.history.push('/feed')
+                    // self.resetForm();
                 } else if (response.data.msg === 'fail') {
                     sessionStorage.setItem("loggedIn", false);
                     // alert("Log In Failed")

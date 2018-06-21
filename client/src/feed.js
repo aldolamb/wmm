@@ -1,42 +1,55 @@
 import React from 'react';
 import axios from "axios";
 
-const items =
-    [1
-    ,2
-    ,3
-    ,4
-    ,5
-    ,6
-    ,7
-    ,8
-    ,9
-    ,10
-    ,11
-    ,12
-    ,13
-    ,14
-    ,15];
-
-const temp = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.<iframe src=\"https://open.spotify.com/embed/track/0Uo7n867Ypq7t9L6GxMOWn\" width=\"100%\" frameBorder=\"0\" allowTransparency=\"true\" allow=\"encrypted-media\"></iframe>";
 export class Feed extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: []
+        };
+
+        this.loadFeed       = this.loadFeed.bind(this);
+        this.createItems    = this.createItems.bind(this);
+        this.handleSubmit   = this.handleSubmit.bind(this);
+    }
+
+    componentWillMount() {
+        this.loadFeed();
+    }
+
+    async loadFeed() {
+        let self = this;
+        axios.post('/feed', {
+            params: {
+            }
+        })
+            .then(function (response) {
+                if (response.data)
+                    self.setState({data: response.data});
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
     createItems = (item) => (
-        <div key={item}>
-            <h2>{item}</h2>
-            <p dangerouslySetInnerHTML={{ __html: temp }}></p>
+        <div key={item.Title}>
+            <h3>{item.Title}</h3>
+            <h4>{item.Subtitle}</h4>
+            <p dangerouslySetInnerHTML={{ __html: item.Body }}></p>
         </div>
     );
 
     async handleSubmit(e) {
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
+        const title = document.getElementById('title').value;
+        const subtitle = document.getElementById('subtitle').value;
+        const body = document.getElementById('body').value;
         const self = this;
         e.preventDefault();
-        await axios.post('/send', {
-            name: name,
-            email: email,
-            messsage: message
+        await axios.post('/upload', {
+            PostTitle: title,
+            PostSubtitle: subtitle,
+            PostBody: body
         })
             .then(function (response) {
                 if (response.data.msg === 'success') {
@@ -76,7 +89,8 @@ export class Feed extends React.Component {
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
                 </div>}
-                {items.map((val) => this.createItems(val))}
+                
+                {Object.values(this.state.data).map(this.createItems)}
             </div>
         )
     }
