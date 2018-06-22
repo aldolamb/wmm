@@ -21,7 +21,7 @@ const auth = firebase.auth();
 
 app.use(bodyParser.json());
 const database = firebase.database();
-const ref = database.ref();
+const ref = database.ref('Posts');
 const rootBeerRef = ref.child('RootBeers');
 const pageLength = 2;
 // const db = firebase.initializeApp(creds.FIREBASECONNECTION);
@@ -104,29 +104,41 @@ app.post('/send', function (req, res) {
 
 app.post('/feed', (req, res) => {
     const data = [];
-    ref.once('value', function(snapshot) {
+    ref.orderByKey().limitToLast(5).once('value', function(snapshot) {
+        let lastVisible = "";
         snapshot.forEach(function(childSnapshot) {
-            var childData = childSnapshot.val();
-            console.log("HERE");
-            Object.keys(childData).forEach((child) => console.log(child))
+            if (!lastVisible)
+                lastVisible = childSnapshot.key;
+            let childData = childSnapshot.val();
             data.push(childData);
         });
-        res.json(data[0]);
+        res.json({data: data.reverse(), lastVisible: lastVisible});
     });
 });
 
-app.post('/upload', (req, res) => {
-    const postTitle = req.body.PostTitle;
-    const postSubtitle = req.body.PostSubtitle;
-    const postBody = req.body.PostBody;
-    const postAll = {
+app.post('/loadMore', (req, res) => {
+    const data = [];
+    const lowerValue = req.body.lastVisible;
+    ref.orderByKey().endAt(lowerValue).limitToLast(6).once('value', function(snapshot) {
+        let lastVisible = "";
+        snapshot.forEach(function(childSnapshot) {
+            if (!lastVisible)
+                lastVisible = childSnapshot.key;
+            if (lowerValue !== childSnapshot.key) {
+                const childData = childSnapshot.val();
+                data.push(childData);
+            }
+        });
+        res.json({data: data.reverse(), lastVisible: lastVisible});
+    });
+});
+
+app.post('/upload', (req) => {
+    ref.push({
         Title: req.body.PostTitle,
         Subtitle: req.body.PostSubtitle,
         Body: req.body.PostBody
-    }
-
-    const ref = database.ref('Posts');
-    database.ref('Posts').push(postAll);
+    });
 });
 
 

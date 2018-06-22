@@ -13,7 +13,7 @@ import { SmokeFree } from "./smoke-free";
 import { Subscribe } from "./subscribe";
 import { Login } from "./login";
 
-const Intro = () => <a href="/feed"><img src={logo3} alt="WMM" className="logo"/></a>;
+const Intro = () => <div style={{width: "100%", backgroundColor: "black"}}><a href="/feed"><img src={logo3} alt="WMM" className="logo"/></a></div>;
 const Error = () => <h1>404..</h1>;
 
 export class WMM extends React.Component {
