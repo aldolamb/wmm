@@ -9,11 +9,11 @@ h1 {
 }
 
 h2 {
-
+    font-size: 2em;
 }
 
 h3 {
-
+    font-size: 1.5em;
 }
 
 h4 {
@@ -84,7 +84,11 @@ h6 {
     width: 43vw;
     box-sizing: border-box;
 }
-    .feed > div {
+    .feed .day {
+        margin-top: 5em;
+    }
+
+    .feed .post {
         margin: 1em 0;
         padding: 0 2em;
         border: 1px solid black;
@@ -140,6 +144,11 @@ h6 {
     padding-top: 20vh;
     margin: auto;
     /*font-size: 2.25em;*/
+}
+
+.post h4 {
+    right: 1em;
+    position: absolute;
 }
 
 iframe {

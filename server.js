@@ -104,7 +104,7 @@ app.post('/send', function (req, res) {
 
 app.post('/feed', (req, res) => {
     const data = [];
-    ref.orderByKey().limitToLast(5).once('value', function(snapshot) {
+    ref.orderByKey().limitToLast(10).once('value', function(snapshot) {
         let lastVisible = "";
         snapshot.forEach(function(childSnapshot) {
             if (!lastVisible)
@@ -119,7 +119,7 @@ app.post('/feed', (req, res) => {
 app.post('/loadMore', (req, res) => {
     const data = [];
     const lowerValue = req.body.lastVisible;
-    ref.orderByKey().endAt(lowerValue).limitToLast(6).once('value', function(snapshot) {
+    ref.orderByKey().endAt(lowerValue).limitToLast(11).once('value', function(snapshot) {
         let lastVisible = "";
         snapshot.forEach(function(childSnapshot) {
             if (!lastVisible)
@@ -137,7 +137,9 @@ app.post('/upload', (req) => {
     ref.push({
         Title: req.body.PostTitle,
         Subtitle: req.body.PostSubtitle,
-        Body: req.body.PostBody
+        Body: req.body.PostBody,
+        Date: req.body.PostDate,
+        Time: req.body.PostTime
     });
 });
 
