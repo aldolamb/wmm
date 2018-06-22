@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Feed } from "./feed";
+import { Post } from "./post";
 import logo from './img/wmm.png';
 import logo2 from './img/logo2.png';
 import logo3 from './img/logo3.png';
@@ -45,6 +46,7 @@ export class WMM extends React.Component {
                 <Header/>
                 <Router>
                     <Switch>
+                        <Route path='/feed/:postID'     component={Post} />
                         <Route path='/feed'         component={Feed} />
                         <Route path='/shop'         component={Shop} />
                         <Route path='/contact'      component={Contact} />

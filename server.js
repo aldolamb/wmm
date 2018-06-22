@@ -110,6 +110,7 @@ app.post('/feed', (req, res) => {
             if (!lastVisible)
                 lastVisible = childSnapshot.key;
             let childData = childSnapshot.val();
+            childData["key"] = childSnapshot.key;
             data.push(childData);
         });
         res.json({data: data.reverse(), lastVisible: lastVisible});
@@ -126,6 +127,7 @@ app.post('/loadMore', (req, res) => {
                 lastVisible = childSnapshot.key;
             if (lowerValue !== childSnapshot.key) {
                 const childData = childSnapshot.val();
+                childData["key"] = childSnapshot.key;
                 data.push(childData);
             }
         });
@@ -143,6 +145,20 @@ app.post('/upload', (req) => {
     });
 });
 
+app.post('/singlePost', (req, res) => {
+    const data = [];
+    console.log(req.body.postID)
+    ref.child(req.body.postID).once('value', function(snapshot) {
+        console.log(snapshot.val());
+        // snapshot.forEach(function(childSnapshot) {
+        //     if (!lastVisible)
+        //         lastVisible = childSnapshot.key;
+        //     let childData = childSnapshot.val();
+        //     data.push(childData);
+        // });
+        res.json(snapshot.val());
+    });
+});
 
 app.post('/subscribe', function (req, res) {
     const email = req.body.email;

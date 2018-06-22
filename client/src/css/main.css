@@ -9,11 +9,11 @@ h1 {
 }
 
 h2 {
-    font-size: 2em;
+    /*font-size: 2em;*/
 }
 
 h3 {
-    font-size: 1.5em;
+    /*font-size: 1.5em;*/
 }
 
 h4 {
@@ -28,6 +28,8 @@ h6 {
 
 }
 
+a { text-decoration: none; color: inherit }
+a:hover { text-decoration: none; color: inherit; }
 
 .main {
     text-align:center;
@@ -84,14 +86,16 @@ h6 {
     width: 43vw;
     box-sizing: border-box;
 }
-    .feed .day {
-        margin-top: 5em;
+    .feed .date {
+        padding: 5em 0 1em 0;
     }
 
     .feed .post {
-        margin: 1em 0;
-        padding: 0 2em;
-        border: 1px solid black;
+        /*margin: 1em 0;*/
+        padding: 0 3em;
+        border-top: 1px solid black;
+        /*border-bottom: 1px solid black;*/
+        /*border: 1px solid black;*/
         box-sizing: border-box;
         height: max-content;
         text-align: left;
@@ -101,7 +105,6 @@ h6 {
         position: relative;
         display: block;
         margin: 1em 0;
-        /*padding: .5em;*/
         box-sizing: border-box;
     }
 
@@ -147,9 +150,133 @@ h6 {
 }
 
 .post h4 {
-    right: 1em;
+    right: 2em;
     position: absolute;
 }
+
+
+.postPage {
+    position: relative;
+    margin: 6em auto;
+    padding: .5em 1em;
+    width: 43vw;
+    box-sizing: border-box;
+    /*border-top: 1px solid black;*/
+    /*border-right: 1px solid black;*/
+    /*border-bottom: 1px solid black;*/
+    /*border-left: 1px solid black;*/
+    /*border: 1px solid black;*/
+}
+    .postPage h2, .postPage h3, .postPage h4 {
+        margin: 0.5em;
+    }
+    .postPage h2 {font-size: 3.5em;}
+    .postPage h3 {font-size: 2em;}
+    .postPage .date {font-size: 1em; position: absolute; left: .7em;}
+    .postPage .time {font-size: 1em; position: absolute; right: .7em;}
+    .postPage p {
+        text-align: left;
+        font-size: 1.3em;
+    }
+
+.iconTest {
+    width: 40px;
+    -webkit-transition: width 1s;
+    height: 40px;
+    position: relative;
+}
+    .iconTest:hover {
+        -webkit-transition: width 1s ease 1s;
+        width: 200px;
+    }
+    .iconTest * {
+        background-color: black;
+        /*height:20px;*/
+        /*width:200px;*/
+        /*transition-duration: 1s;*/
+        /*transform-origin: left;*/
+        position: absolute;
+
+        /*transition:*/
+            /*rotate 1s,*/
+            /*background 1s;*/
+        padding: 0;
+    }
+    .iconTest .top {
+        -webkit-transition: transform 1s ease 1s;
+        transition: transform 1s ease 1s;
+        transform: rotate(45deg);
+        width: inherit;
+        height: 4px;
+        transform-origin: 0 50%;
+    }
+    .iconTest .right {
+        -webkit-transition: height 1s, transform 1s ease 1s;
+        transition: height 1s, transform 1s ease 1s;
+        transform: rotate(45deg);
+        right: 0;
+        height: inherit;
+        width: 4px;
+        transform-origin: 50% 0;
+    }
+    .iconTest .bottom {
+        -webkit-transition: transform 1s ease 1s;
+        transition: transform 1s ease 1s;
+        /*transform: rotate(135deg);*/
+        transform: rotate(45deg);
+        bottom: 0;
+        width: inherit;
+        height: 4px;
+        transform-origin: 100% 50%;
+    }
+    .iconTest .left {
+        -webkit-transition: height 1s, transform 1s ease 1s;
+        transition: height 1s, transform 1s ease 1s;
+        transform: rotate(45deg);
+        left: 0px;
+        height: inherit;
+        width: 4px;
+        transform-origin: 50% 100%;
+    }
+
+    .iconTest:hover .top {
+        -webkit-transition: transform 1s;
+        transition: transform 1s;
+        /*transition-property: transform, background-color;*/
+        /*transition-duration:1s;*/
+        /*transition-delay:0s, 1s;*/
+        /*transition-timing-funtion:linear;*/
+        transform: rotate(0);
+    }
+    .iconTest:hover .right {
+        -webkit-transition: height 1s, transform 1s;
+        transition: height 1s, transform 1s;
+        /*transition-property: transform, background-color;*/
+        /*transition-duration:1s;*/
+        /*transition-delay:0s, 1s;*/
+        /*transition-timing-funtion:linear;*/
+        transform: rotate(0);
+    }
+    .iconTest:hover .bottom {
+        -webkit-transition: transform 1s;
+        transition: transform 1s;
+        /*transition-property: transform, background-color;*/
+        /*transition-duration:1s;*/
+        /*transition-delay:0s, 1s;*/
+        /*transition-timing-funtion:linear;*/
+        transform: rotate(0);
+    }
+    .iconTest:hover .left {
+        -webkit-transition: height 1s, transform 1s;
+        transition: height 1s, transform 1s;
+        /*transition-property: transform, background-color;*/
+        /*transition-duration:1s;*/
+        /*transition-delay:0s, 1s;*/
+        /*transition-timing-funtion:linear;*/
+        transform: rotate(0);
+    }
+
+
 
 iframe {
     width: 100%;

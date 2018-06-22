@@ -69,19 +69,26 @@ export class Feed extends React.Component {
             });
     }
 
+    currentDate() {
+        const today = new Date();
+        return today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    }
+
     createDays = (day) => (
-        <div className="day" key={day[0]}>
-            {day[0]}
+        <div key={day[0]}>
+            <p className="date">{day[0] === this.currentDate() ? "Today" : day[0]}</p>
             {day[1].map(this.createItems)}
         </div>
     );
 
     createItems = (item) => (
-        <div className="post" key={item.Title}>
-            <h4>{item.Time}</h4>
-            <h2>{item.Title}</h2>
-            <h3>{item.Subtitle}</h3>
-        </div>
+        <a key={item.Title} href={`/feed/${item.key}`}>
+            <span className="post" key={item.Title}>
+                <h4>{item.Time}</h4>
+                <h2>{item.Title}</h2>
+                <h3>{item.Subtitle}</h3>
+            </span>
+        </a>
             // <p dangerouslySetInnerHTML={{ __html: item.Body }}/>
     );
 
