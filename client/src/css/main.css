@@ -28,9 +28,6 @@ h6 {
 
 }
 
-a { text-decoration: none; color: inherit }
-a:hover { text-decoration: none; color: inherit; }
-
 .main {
     text-align:center;
     /*background-color: black;*/
@@ -44,7 +41,8 @@ a:hover { text-decoration: none; color: inherit; }
 .header {
     padding: .5em;
     right: 0;
-    position: fixed;
+    /*position: fixed;*/
+    position: relative;
     text-align: right;
     font-size: 2.25em;
 }
@@ -83,17 +81,22 @@ a:hover { text-decoration: none; color: inherit; }
 .feed {
     position: relative;
     margin: auto;
-    width: 43vw;
+    width: 50em;
+    top: -5em;
+    padding: 0 2.5em;
+    max-width: 100%;
+    display: inline-block;
     box-sizing: border-box;
 }
     .feed .date {
-        padding: 5em 0 1em 0;
+        padding-top: 5em;
     }
 
     .feed .post {
         /*margin: 1em 0;*/
         padding: 0 3em;
         border-top: 1px solid black;
+
         /*border-bottom: 1px solid black;*/
         /*border: 1px solid black;*/
         box-sizing: border-box;
@@ -106,16 +109,14 @@ a:hover { text-decoration: none; color: inherit; }
         display: block;
         margin: 1em 0;
         box-sizing: border-box;
+        color: black;
     }
 
-    .feed input {
-        width: 50%;
-    }
+    .feed input { width: 50%; }
+    .feed textarea { width: 100%; max-width: 100%; }
 
-    .feed textarea {
-        width: 100%;
-        max-width: 100%;
-    }
+    .feed a { text-decoration: none; color: inherit; }
+    .feed a:hover { text-decoration: none; }
 
 
 .shop {
@@ -154,11 +155,11 @@ a:hover { text-decoration: none; color: inherit; }
     position: absolute;
 }
 
-
 .postPage {
     position: relative;
-    margin: 6em auto;
-    width: 40em;
+    margin: 0 auto;
+    width: 50em;
+    padding: 0 2.5em;
     max-width: 100%;
     box-sizing: border-box;
     /*border-top: 1px solid black;*/
@@ -284,6 +285,12 @@ a:hover { text-decoration: none; color: inherit; }
     margin: 6em auto;
     width: 40em;
 }
+    .upload * {
+        width: 100%;
+    }
+    .upload div {
+        padding-bottom: 1em;
+    }
 
 
 iframe {

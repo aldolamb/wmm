@@ -23,6 +23,9 @@ app.use(bodyParser.json());
 const database = firebase.database();
 const ref = database.ref('Posts');
 const rootBeerRef = ref.child('RootBeers');
+
+const storageRef = firebase.storage().ref();
+
 const pageLength = 2;
 // const db = firebase.initializeApp(creds.FIREBASECONNECTION);
 
@@ -134,15 +137,24 @@ app.post('/loadMore', (req, res) => {
         res.json({data: data.reverse(), lastVisible: lastVisible});
     });
 });
-
+const util = require('util')
 app.post('/upload', (req) => {
-    ref.push({
-        Title: req.body.PostTitle,
-        Subtitle: req.body.PostSubtitle,
-        Body: req.body.PostBody,
-        Date: req.body.PostDate,
-        Time: req.body.PostTime
-    });
+    console.log(req.body.PostFile);
+    if(req.body.PostFile) {
+        console.log("out");
+        storageRef.put(req.body.PostFile).then(function(snapshot) {
+            console.log(util.inspect(snapshot, {showHidden: false, depth: null}))
+            console.log("in");
+        })
+    } else {
+        ref.push({
+            Title: req.body.PostTitle,
+            Subtitle: req.body.PostSubtitle,
+            Body: req.body.PostBody,
+            Date: req.body.PostDate,
+            Time: req.body.PostTime
+        });
+    }
 });
 
 app.post('/singlePost', (req, res) => {
