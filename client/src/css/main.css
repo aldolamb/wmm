@@ -158,8 +158,8 @@ a:hover { text-decoration: none; color: inherit; }
 .postPage {
     position: relative;
     margin: 6em auto;
-    padding: .5em 1em;
-    width: 43vw;
+    width: 40em;
+    max-width: 100%;
     box-sizing: border-box;
     /*border-top: 1px solid black;*/
     /*border-right: 1px solid black;*/
@@ -175,6 +175,9 @@ a:hover { text-decoration: none; color: inherit; }
     .postPage .date {font-size: 1em; position: absolute; left: .7em;}
     .postPage .time {font-size: 1em; position: absolute; right: .7em;}
     .postPage p {
+        border-top: 1px solid black;
+        margin: 1em;
+        padding: 2em 1em;
         text-align: left;
         font-size: 1.3em;
     }
@@ -276,6 +279,11 @@ a:hover { text-decoration: none; color: inherit; }
         transform: rotate(0);
     }
 
+.upload {
+    text-align: left;
+    margin: 6em auto;
+    width: 40em;
+}
 
 
 iframe {

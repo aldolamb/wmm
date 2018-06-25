@@ -147,9 +147,9 @@ app.post('/upload', (req) => {
 
 app.post('/singlePost', (req, res) => {
     const data = [];
-    console.log(req.body.postID)
+    // console.log(req.body.postID)
     ref.child(req.body.postID).once('value', function(snapshot) {
-        console.log(snapshot.val());
+        // console.log(snapshot.val());
         // snapshot.forEach(function(childSnapshot) {
         //     if (!lastVisible)
         //         lastVisible = childSnapshot.key;
