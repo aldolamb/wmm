@@ -19,16 +19,8 @@ const Intro = () => <div style={{width: "100%", backgroundColor: "black"}}><a hr
 const Error = () => <h1>404..</h1>;
 
 export class WMM extends React.Component {
-    // componentWillUnmount() {
-    //     axios.post('/log_out')
-    //         .catch(function(error) {
-    //             if (error)
-    //                 console.log(error);
-    //         });
-    // }
-
     componentDidMount() {
-        window.addEventListener('onclose', () =>{
+        window.addEventListener('beforeunload', () =>{
             axios.post('/log_out')
                 .catch(function(error) {
                     if (error)
@@ -37,17 +29,13 @@ export class WMM extends React.Component {
         });
     }
 
-    componentWillUnmount() {
-        window.removeEventListener('onclose', "")
-    }
-
     render() {
         return (
             <div className="main">
                 <Header/>
                 <Router>
                     <Switch>
-                        <Route path='/feed/:postID'     component={Post} />
+                        <Route path='/feed/:postID' component={Post} />
                         <Route path='/feed'         component={Feed} />
                         <Route path='/shop'         component={Shop} />
                         <Route path='/contact'      component={Contact} />
