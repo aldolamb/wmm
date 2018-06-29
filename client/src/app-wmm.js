@@ -8,6 +8,7 @@ import logo2 from './img/logo2.png';
 import logo3 from './img/logo3.png';
 import logoGif from './img/logo.gif';
 import { Shop } from "./shop";
+import { Pay } from "./pay";
 import { Header } from "./header";
 import { Contact } from "./contact";
 import { SmokeFree } from "./smoke-free";
@@ -39,12 +40,13 @@ export class WMM extends React.Component {
                         <Route path='/feed/:postID' component={Post} />
                         <Route path='/feed'         component={Feed} />
                         <Route path='/shop'         component={Shop} />
+                        <Route path='/pay'          component={Pay} />
                         <Route path='/contact'      component={Contact} />
                         <Route path='/smoke-free'   component={SmokeFree} />
                         <Route path='/subscribe'    component={Subscribe} />
                         <Route path='/login'        component={Login} />
                         <Route path='/upload'       component={Upload} />
-                        <Route exact path='/'       component={Home} />
+                        <Route exact path='/'       component={Intro} />
                         <Route path='*'             component={Error} />
                     </Switch>
                 </Router>

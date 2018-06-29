@@ -13,26 +13,23 @@ const Intro = <div style={{width: "100%"}}><a href="/feed"><img src={logo} alt="
 export class Header extends React.Component {
     render() {
         return (
-            <div>
-                <div className="header">
-                    {/*<a href="/feed"><Home/></a>*/}
-                    {/*<a href="/shop"><Money/></a>*/}
-                    {/*<a href="/contact"><Mail/></a>*/}
-                    {/*<a href="/subscribe"><Subscribe/></a>*/}
-                    {/*<a href="/"><Clear/></a>*/}
+            <div className="header">
+                {/*<a href="/feed"><Home/></a>*/}
+                {/*<a href="/shop"><Money/></a>*/}
+                {/*<a href="/contact"><Mail/></a>*/}
+                {/*<a href="/subscribe"><Subscribe/></a>*/}
+                {/*<a href="/"><Clear/></a>*/}
 
-                    <a href="/feed">Home</a>
-                    <a href="/shop">Shop</a>
-                    <a href="/contact">Contact</a>
+                <a href="/feed">Home</a>
+                <a href="/shop">Shop</a>
+                <a href="/contact">Contact</a>
 
-                    {/*<div className="iconTest">*/}
-                        {/*<div className="top"></div>*/}
-                        {/*<div className="right"></div>*/}
-                        {/*<div className="bottom"></div>*/}
-                        {/*<div className="left"></div>*/}
-                    {/*</div>*/}
-                </div>
-                {Intro}
+                {/*<div className="iconTest">*/}
+                    {/*<div className="top"></div>*/}
+                    {/*<div className="right"></div>*/}
+                    {/*<div className="bottom"></div>*/}
+                    {/*<div className="left"></div>*/}
+                {/*</div>*/}
             </div>
         )
     }

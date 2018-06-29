@@ -74,7 +74,7 @@ export class Feed extends React.Component {
     }
 
     createDays = (day) => (
-        <div key={day[0]}>
+        <div className="day" key={day[0]}>
             <p className="date">{day[0] === this.currentDate() ? "Today" : day[0]}</p>
             {day[1].map(this.createItems)}
         </div>
