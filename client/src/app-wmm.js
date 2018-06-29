@@ -15,8 +15,9 @@ import { Subscribe } from "./subscribe";
 import { Login } from "./login";
 import { Upload } from "./upload";
 
-const Intro = () => <div style={{width: "100%", backgroundColor: "black"}}><a href="/feed"><img src={logo3} alt="WMM" className="logo"/></a></div>;
+const Intro = () => <div style={{width: "100%"}}><a href="/feed"><img src={logo} alt="WMM" className="logo"/></a></div>;
 const Error = () => <h1>404..</h1>;
+const Home = () => <div></div>;
 
 export class WMM extends React.Component {
     componentDidMount() {
@@ -43,7 +44,7 @@ export class WMM extends React.Component {
                         <Route path='/subscribe'    component={Subscribe} />
                         <Route path='/login'        component={Login} />
                         <Route path='/upload'       component={Upload} />
-                        <Route exact path='/'       component={Intro} />
+                        <Route exact path='/'       component={Home} />
                         <Route path='*'             component={Error} />
                     </Switch>
                 </Router>

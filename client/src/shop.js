@@ -20,7 +20,12 @@ const items =
 export class Shop extends React.Component {
     createItems = (item) => (
         <div key={item}>
-            <div>
+            <div className="overlay">
+                <div className="text">
+                    <p>{item}</p>
+                    <p style={{borderBottom: "1px solid #ffffff"}}/>
+                    <p>$40</p>
+                </div>
             </div>
         </div>
     );
