@@ -23,6 +23,9 @@ export class Header extends React.Component {
                 <a href="/feed">Home</a>
                 <a href="/shop">Shop</a>
                 <a href="/contact">Contact</a>
+                {sessionStorage.getItem("loggedIn") &&
+                    <a href="/upload">Upload</a>
+                }
 
                 {/*<div className="iconTest">*/}
                     {/*<div className="top"></div>*/}

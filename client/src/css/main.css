@@ -127,6 +127,7 @@ h6 {
     margin: auto;
     /*width: 51vw;*/
     width: 900px;
+    padding-top: 1.5em;
 }
     .shop > div {
         float: left;
@@ -444,6 +445,32 @@ input, textarea                 {   border: 1px solid darkgray; }
     font-weight: bold;
 }
 
+.load_more {
+    width: 12em;
+    height: 3em;
+    margin: 2em 0 5em 0;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: .8em;
+
+    /*-webkit-transition-duration: 0.4s; !* Safari *!*/
+    /*transition-duration: 0.4s;*/
+}
+
+/*.load_more:hover {*/
+    /*background-color: black;*/
+    /*color: white;*/
+/*}*/
+
+.load_more:active {
+    background-color: black;
+    color: white;
+    /*box-shadow: 0 5px #666;*/
+    /*transform: translateY(4px);*/
+}
+
+.load_more:focus {outline:0;}
 
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */

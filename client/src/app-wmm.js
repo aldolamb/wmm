@@ -22,7 +22,7 @@ const Home = () => <div></div>;
 
 export class WMM extends React.Component {
     componentDidMount() {
-        window.addEventListener('beforeunload', () =>{
+        window.addEventListener('onbeforeunload', () =>{
             axios.post('/log_out')
                 .catch(function(error) {
                     if (error)
@@ -30,6 +30,7 @@ export class WMM extends React.Component {
                 });
         });
     }
+
 
     render() {
         return (
@@ -40,7 +41,7 @@ export class WMM extends React.Component {
                         <Route path='/feed/:postID' component={Post} />
                         <Route path='/feed'         component={Feed} />
                         <Route path='/shop'         component={Shop} />
-                        <Route path='/checkout'          component={Checkout} />
+                        <Route path='/checkout'     component={Checkout} />
                         <Route path='/contact'      component={Contact} />
                         <Route path='/smoke-free'   component={SmokeFree} />
                         <Route path='/subscribe'    component={Subscribe} />
