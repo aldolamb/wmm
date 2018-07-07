@@ -12,6 +12,7 @@ export class Feed extends React.Component {
         };
 
         this.loadFeed       = this.loadFeed.bind(this);
+        this.loadMore       = this.loadMore.bind(this);
         this.createItems    = this.createItems.bind(this);
     }
 
@@ -42,16 +43,17 @@ export class Feed extends React.Component {
         window.removeEventListener('scroll', this.onScroll, false);
     }
 
-    onScroll = () => {
-        if (
-            (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 250) &&
-            this.state.data.length && this.state.isLoaded
-        ) {
-            this.loadMore();
-        }
-    }
+    // onScroll = () => {
+    //     if (
+    //         (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 250) &&
+    //         this.state.data.length && this.state.isLoaded
+    //     ) {
+    //         this.loadMore();
+    //     }
+    // }
 
     async loadMore() {
+        console.log("called")
         let self = this;
         self.setState({isLoaded: false});
         axios.post('/loadMore', {
@@ -108,6 +110,7 @@ export class Feed extends React.Component {
         return (
             <div className="feed">
                 {Object.entries(test).map(this.createDays)}
+                <button className="load_more" onClick={this.loadMore}>Load More</button>
             </div>
         )
     }
