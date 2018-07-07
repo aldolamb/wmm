@@ -93,7 +93,7 @@ export class Feed extends React.Component {
 
     groupBy(objectArray, property) {
       return objectArray.reduce(function (acc, obj) {
-        var key = obj[property];
+        let key = obj[property];
         if (!acc[key]) {
           acc[key] = [];
         }
