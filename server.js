@@ -21,8 +21,8 @@ const auth = firebase.auth();
 
 app.use(bodyParser.json());
 const database = firebase.database();
-const ref = database.ref('Posts');
-const rootBeerRef = ref.child('RootBeers');
+const posts_ref = database.ref('Posts');
+// const rootBeerRef = ref.child('RootBeers');
 
 const storageRef = firebase.storage().ref();
 
@@ -72,6 +72,13 @@ const storageRef = firebase.storage().ref();
 
 
 
+auth.signInAnonymously().catch(function(error) {
+  // Handle Errors here.
+  console.log("error");
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // ...
+});
 
 auth.onAuthStateChanged(function(user) {
   if (user) {
@@ -80,6 +87,21 @@ auth.onAuthStateChanged(function(user) {
     console.log("signed out")
   }
 });
+
+
+
+// auth.onAuthStateChanged(function(user) {
+//   if (user) {
+//     // User is signed in.
+//     var isAnonymous = user.isAnonymous;
+//     var uid = user.uid;
+//     // ...
+//   } else {
+//     // User is signed out.
+//     // ...
+//   }
+//   // ...
+// });
 
 // app.post('/login', function (req, res) {
 //     const email = req.body.email;
@@ -151,7 +173,7 @@ app.post('/send', function (req, res) {
 
 app.post('/feed', (req, res) => {
     const data = [];
-    ref.orderByKey().limitToLast(10).once('value', function(snapshot) {
+    posts_ref.orderByKey().limitToLast(10).once('value', function(snapshot) {
         let lastVisible = "";
         snapshot.forEach(function(childSnapshot) {
             if (!lastVisible)
@@ -167,7 +189,7 @@ app.post('/feed', (req, res) => {
 app.post('/loadMore', (req, res) => {
     const data = [];
     const lowerValue = req.body.lastVisible;
-    ref.orderByKey().endAt(lowerValue).limitToLast(11).once('value', function(snapshot) {
+    posts_ref.orderByKey().endAt(lowerValue).limitToLast(11).once('value', function(snapshot) {
         let lastVisible = "";
         snapshot.forEach(function(childSnapshot) {
             if (!lastVisible)
@@ -191,7 +213,7 @@ app.post('/upload', (req) => {
             console.log("in");
         })
     } else {
-        ref.push({
+        posts_ref.push({
             Title: req.body.PostTitle,
             Subtitle: req.body.PostSubtitle,
             Body: req.body.PostBody,
