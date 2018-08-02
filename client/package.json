@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.1",
+    "paypal-checkout": "^4.0.209",
     "react": "^16.4.1",
     "react-async-script-loader": "^0.3.0",
     "react-dom": "^16.4.1",
