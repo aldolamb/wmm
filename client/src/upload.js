@@ -6,10 +6,9 @@ export class Upload extends React.Component {
     async handleSubmit(e) {
         const title = document.getElementById('title').value;
         const subtitle = document.getElementById('subtitle').value;
-        const file = document.getElementById('file').value;
+        // const file = document.getElementById('file').value;
         const body = document.getElementById('body').value;
         const self = this;
-        console.log(file);
         const today = new Date();
         const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -17,7 +16,6 @@ export class Upload extends React.Component {
         await axios.post('/upload', {
             PostTitle: title,
             PostSubtitle: subtitle,
-            PostFile: file,
             PostBody: body,
             PostDate: date,
             PostTime: time,
@@ -42,7 +40,7 @@ export class Upload extends React.Component {
     render () {
         return (
             <div className="upload">
-                {sessionStorage.getItem("loggedIn") &&
+                {/*{sessionStorage.getItem("loggedIn") &&*/}
                 <div>
                     <form id="contact-form" onSubmit={this.handleSubmit.bind(this)} method="POST">
                         <div className="form-group">
@@ -53,10 +51,10 @@ export class Upload extends React.Component {
                             <label htmlFor="email">Subtitle</label>
                             <input type="text" className="form-control" id="subtitle" aria-describedby="emailHelp" required/>
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="file">File</label>
-                            <input style={{border: 'none'}}type="file" className="form-control" id="file" aria-describedby="emailHelp"/>
-                        </div>
+                        {/*<div className="form-group">*/}
+                            {/*<label htmlFor="file">File</label>*/}
+                            {/*<input style={{border: 'none'}}type="file" className="form-control" id="file" aria-describedby="emailHelp"/>*/}
+                        {/*</div>*/}
                         <div className="form-group">
                             <label htmlFor="body">Body</label>
                             <textarea className="form-control" rows="5" id="body" required/>
@@ -64,7 +62,7 @@ export class Upload extends React.Component {
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
                 </div>
-                }
+                {/*}*/}
             </div>
         )
     }

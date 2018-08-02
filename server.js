@@ -219,22 +219,54 @@ app.post('/upload', (req) => {
             Subtitle: req.body.PostSubtitle,
             Body: req.body.PostBody,
             Date: req.body.PostDate,
-            Time: req.body.PostTime
+            Time: req.body.PostTime,
         });
     }
 });
 
+app.post('/save', function (req, res) {
+    let updates = {};
+    console.log(req.body.PostBody);
+    updates[req.body.PostKey] = {
+        Title: req.body.PostTitle,
+        Subtitle: req.body.PostSubtitle,
+        Body: req.body.PostBody,
+        Date: req.body.PostDate,
+        Time: req.body.PostTime,
+    };
+
+    if(req.body.PostFile) {
+        // console.log("out");
+        // storageRef.put(req.body.PostFile).then(function(snapshot) {
+        //     console.log(util.inspect(snapshot, {showHidden: false, depth: null}))
+        //     console.log("in");
+        // })
+    } else {
+        // posts_ref.update(updates);
+        firebase.database().ref('Posts/' + req.body.PostKey).set({
+            Title: req.body.PostTitle,
+            Subtitle: req.body.PostSubtitle,
+            Body: req.body.PostBody,
+            Date: req.body.PostDate,
+            Time: req.body.PostTime,
+        }, function(error) {
+            if (error) {
+                res.json({
+                    msg: 'fail'
+                })
+            } else {
+                res.json({
+                    msg: 'success'
+                })
+            }
+        });
+    }
+});
+
+
 app.post('/singlePost', (req, res) => {
     const data = [];
-    // console.log(req.body.postID)
     posts_ref.child(req.body.postID).once('value', function(snapshot) {
-        // console.log(snapshot.val());
-        // snapshot.forEach(function(childSnapshot) {
-        //     if (!lastVisible)
-        //         lastVisible = childSnapshot.key;
-        //     let childData = childSnapshot.val();
-        //     data.push(childData);
-        // });
         res.json(snapshot.val());
     });
 });

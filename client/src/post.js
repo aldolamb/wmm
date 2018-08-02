@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from "axios/index";
+// import Edit from 'react-icons/lib/md/edit';
+// import Delete from 'react-icons/lib/md/delete';
 import { Document, Page } from 'react-pdf';
 
 export class Post extends React.Component {
@@ -45,6 +47,12 @@ export class Post extends React.Component {
                 {/* <p>{this.state.data.Body}</p> */}
                 {this.state.data.PDF ? <p><Document file={"https://firebasestorage.googleapis.com/v0/b/wmmdata-42f0b.appspot.com/o/sample.pdf?alt=media&token=0a35a15d-49b8-4e07-b554-e8e7211d7747"} onLoadSuccess={this.onDocumentLoad}>{this.range(this.state.data.Pages).map(page => (<Page pageNumber={page} />))}</Document></p> :
                 <p dangerouslySetInnerHTML={{ __html: this.state.data.Body }}/>}
+                {sessionStorage.getItem("loggedIn") &&
+                <div className="tools">
+                    <button><a href={`/feed/edit/${this.state.postID}`}>Edit</a></button>
+                    <button><a href="#">Delete</a></button>
+                </div>
+                }
             </div>
         )
     }

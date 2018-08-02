@@ -3,6 +3,7 @@ import axios from 'axios';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Feed } from "./feed";
 import { Post } from "./post";
+import { Edit } from "./edit";
 import logo from './img/wmm.png';
 import logo2 from './img/logo2.png';
 import logo3 from './img/logo3.png';
@@ -37,6 +38,12 @@ export class WMM extends React.Component {
                 <Header/>
                 <Router>
                     <Switch>
+                        {sessionStorage.getItem("loggedIn") &&
+                        <Switch>
+                            <Route path='/upload'            component={Upload} />
+                        </Switch>
+                        }
+                        <Route path='/feed/edit/:postID' component={Edit} />
                         <Route path='/feed/:postID' component={Post} />
                         <Route path='/feed'         component={Feed} />
                         <Route path='/shop'         component={Shop} />
@@ -45,7 +52,6 @@ export class WMM extends React.Component {
                         <Route path='/smoke-free'   component={SmokeFree} />
                         <Route path='/subscribe'    component={Subscribe} />
                         <Route path='/login'        component={Login} />
-                        <Route path='/upload'       component={Upload} />
                         <Route exact path='/'       component={Intro} />
                         <Route path='*'             component={Error} />
                     </Switch>
