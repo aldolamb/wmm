@@ -110,9 +110,8 @@ export class Feed extends React.Component {
         return (
             <div className="feed">
                 {Object.entries(test).map(this.createDays)}
+                {/*<button className="load_more" onClick={this.loadMore}>Load More</button>*/}
             </div>
         )
     }
 }
-
-                // <button className="load_more" onClick={this.loadMore}>Load More</button>
