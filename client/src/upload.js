@@ -2,6 +2,9 @@ import React from 'react';
 import axios from 'axios';
 
 export class Upload extends React.Component {
+    state = {
+        selectedFile: null
+    }
     
     async handleSubmit(e) {
         const title = document.getElementById('title').value;
@@ -37,28 +40,95 @@ export class Upload extends React.Component {
         document.getElementById('contact-form').reset();
     }
 
-    async uploadFile() {
-        console.log("egg");
-        const file = document.getElementById('file').value;
-        console.log(file);
-        const self = this;
-        await axios.post('/uploadFile', {
-            File: file,
+
+    fileSelectedHandler = event => {
+        this.setState({
+            selectedFile: event.target.files[0]
         })
-            .then(function (response) {
-                if (response.data.msg === 'success') {
-                    alert("Message Sent.");
-                    self.resetForm();
-                } else if (response.data.msg === 'fail') {
-                    alert("Message failed to send.")
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
     }
 
+    fileUploadHandler = () => {
+        // let self = this;
+        console.log(fd);
+        const fd = new FormData();
+        fd.append('image', this.state.selectedFile);
+        axios.post('/uploadImage', fd)
+                .then(function (response) {
+                    if (response.data.msg === 'success') {
+                        alert("Message Sent.");
+                        // self.resetForm();
+                    } else if (response.data.msg === 'fail') {
+                        alert("Message failed to send.")
+                    } else {
+                        console.log(response.data.msg);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+    }
+
+
+    // async uploadFile() {
+    //     // const file = document.getElementById('file').files[0];
+    //     const file = new Blob([document.getElementById('file').files[0]], { type: 'image/jpg' });
+    //     // const file = new Blob([files[0]], { type: 'image/png' });
+    //     let formData = new FormData();
+    //     formData.append("image", file);
+    //     console.log(formData);
+    //     const self = this;
+    //     // axios.post('uploadImage', formData, {
+    //     //     headers: {
+    //     //         'Content-Type': 'multipart/form-data'
+    //     //     }
+    //     // })
+    //     axios.post('/uploadImage', formData, {
+    //         headers: {
+    //             'Content-Type': 'multipart/form-data'
+    //         }
+    //     })
+    //         .then(function (response) {
+    //             if (response.data.msg === 'success') {
+    //                 alert("Message Sent.");
+    //                 // self.resetForm();
+    //             } else if (response.data.msg === 'fail') {
+    //                 alert("Message failed to send.")
+    //             } else {
+    //                 console.log(response.data.msg);
+    //             }
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         });
+    //
+    //     // const file = document.getElementById('file').files[0];
+    //     // console.log(file);
+    //     // const self = this;
+    //     // await axios.post('/uploadImage', {
+    //     //     Name: "egg",
+    //     //     File: file,
+    //     // })
+    //     //     .then(function (response) {
+    //     //         if (response.data.msg === 'success') {
+    //     //             alert("Message Sent.");
+    //     //             // self.resetForm();
+    //     //         } else if (response.data.msg === 'fail') {
+    //     //             alert("Message failed to send.")
+    //     //         } else {
+    //     //             console.log(response.data.msg);
+    //     //         }
+    //     //     })
+    //     //     .catch(function (error) {
+    //     //         console.log(error);
+    //     //     });
+    // }
+
     render () {
+        // document.getElementById("file").onchange = function() {
+        //     // document.getElementById("form").submit();
+        //     console.log("added" + document.getElementById("form").value)
+        // };
+
         return (
             <div className="upload">
                 {/*{sessionStorage.getItem("loggedIn") &&*/}
@@ -77,9 +147,8 @@ export class Upload extends React.Component {
                         {/*</div>*/}
                         <div className="form-group">
                             <div className="toolBar">
-                                <input style={{border: 'none'}}type="file" className="form-control" id="file" aria-describedby="emailHelp"/>
-                                <button onClick= {() => this.uploadFile}>Add Image</button>
-                                <button>Add PDF</button>
+                                <label><input onChange={this.fileSelectedHandler} type="file" className="form-control" id="file"/></label>
+                                <button onClick= {this.fileUploadHandler}>Add Image</button>
                             </div>
                             <label htmlFor="body">Body</label>
                             <textarea className="form-control" rows="5" id="body" required/>
