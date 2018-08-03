@@ -37,11 +37,31 @@ export class Upload extends React.Component {
         document.getElementById('contact-form').reset();
     }
 
+    async uploadFile() {
+        console.log("egg");
+        const file = document.getElementById('file').value;
+        console.log(file);
+        const self = this;
+        await axios.post('/uploadFile', {
+            File: file,
+        })
+            .then(function (response) {
+                if (response.data.msg === 'success') {
+                    alert("Message Sent.");
+                    self.resetForm();
+                } else if (response.data.msg === 'fail') {
+                    alert("Message failed to send.")
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
     render () {
         return (
             <div className="upload">
                 {/*{sessionStorage.getItem("loggedIn") &&*/}
-                <div>
                     <form id="contact-form" onSubmit={this.handleSubmit.bind(this)} method="POST">
                         <div className="form-group">
                             <label htmlFor="title">Title</label>
@@ -56,12 +76,16 @@ export class Upload extends React.Component {
                             {/*<input style={{border: 'none'}}type="file" className="form-control" id="file" aria-describedby="emailHelp"/>*/}
                         {/*</div>*/}
                         <div className="form-group">
+                            <div className="toolBar">
+                                <input style={{border: 'none'}}type="file" className="form-control" id="file" aria-describedby="emailHelp"/>
+                                <button onClick= {() => this.uploadFile}>Add Image</button>
+                                <button>Add PDF</button>
+                            </div>
                             <label htmlFor="body">Body</label>
                             <textarea className="form-control" rows="5" id="body" required/>
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
-                </div>
                 {/*}*/}
             </div>
         )

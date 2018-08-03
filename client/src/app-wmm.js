@@ -37,26 +37,40 @@ export class WMM extends React.Component {
             <div className="main">
                 <Header/>
                 <Router>
+                    {sessionStorage.getItem("loggedIn") ?
                     <Switch>
-                        {sessionStorage.getItem("loggedIn") &&
-                        <Switch>
-                            <Route path='/upload'            component={Upload} />
-                        </Switch>
-                        }
-                        <Route path='/feed/edit/:postID' component={Edit} />
-                        <Route path='/feed/:postID' component={Post} />
-                        <Route path='/feed'         component={Feed} />
-                        <Route path='/shop'         component={Shop} />
-                        <Route path='/checkout'     component={Checkout} />
-                        <Route path='/contact'      component={Contact} />
-                        <Route path='/smoke-free'   component={SmokeFree} />
-                        <Route path='/subscribe'    component={Subscribe} />
-                        <Route path='/login'        component={Login} />
-                        <Route exact path='/'       component={Intro} />
-                        <Route path='*'             component={Error} />
+                        <Route path='/feed/edit/:postID'    component={Edit} />
+                        <Route path='/feed/:postID'         component={Post} />
+                        <Route path='/feed'                 component={Feed} />
+                        <Route path='/shop'                 component={Shop} />
+                        <Route path='/checkout'             component={Checkout} />
+                        <Route path='/contact'              component={Contact} />
+                        <Route path='/upload'               component={Upload} />
+                        <Route path='/smoke-free'           component={SmokeFree} />
+                        <Route path='/subscribe'            component={Subscribe} />
+                        <Route path='/login'                component={Login} />
+                        <Route exact path='/'               component={Intro} />
+                        <Route path='*'                     component={Error} />
+                    </Switch> :
+                    <Switch>
+                        <Route path='/feed/:postID'         component={Post} />
+                        <Route path='/feed'                 component={Feed} />
+                        <Route path='/shop'                 component={Shop} />
+                        <Route path='/checkout'             component={Checkout} />
+                        <Route path='/contact'              component={Contact} />
+                        <Route path='/login'                component={Login} />
+                        <Route exact path='/'               component={Intro} />
+                        <Route path='*'                     component={Error} />
                     </Switch>
+                    }
                 </Router>
             </div>
         )
     }
 }
+
+{sessionStorage.getItem("loggedIn") &&
+                        <Switch>
+                            <Route path='/upload'            component={Upload} />
+                        </Switch>
+                        }

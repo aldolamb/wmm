@@ -226,7 +226,6 @@ app.post('/upload', (req) => {
 
 app.post('/save', function (req, res) {
     let updates = {};
-    console.log(req.body.PostBody);
     updates[req.body.PostKey] = {
         Title: req.body.PostTitle,
         Subtitle: req.body.PostSubtitle,
@@ -263,6 +262,20 @@ app.post('/save', function (req, res) {
     }
 });
 
+app.post('/delete', function (req, res) {
+    // posts_ref.update(updates);
+    firebase.database().ref('Posts/' + req.body.PostKey).remove()
+    .then(function() {
+        res.json({
+            msg: 'success'
+        })
+    })
+    .catch(function(error) {
+        res.json({
+            msg: 'fail'
+        })
+    });;
+});
 
 app.post('/singlePost', (req, res) => {
     const data = [];

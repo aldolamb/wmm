@@ -1,4 +1,4 @@
-body { margin: 0; }
+body { margin: 1em 0 5em 0;}
 
 p {
 
@@ -230,6 +230,29 @@ a {
         font-size: 1.3em;
     }
 
+    .postPage img {
+        display: block;
+        margin: auto;
+        -webkit-filter: grayscale(100%);  /*Safari 6.0 - 9.0*/
+        filter: grayscale(100%);
+        transition: filter 0.5s;
+        width: 67%;
+    }
+
+    .postPage img:hover {
+        -webkit-filter: grayscale(0%);  /*Safari 6.0 - 9.0*/
+        filter: grayscale(0%);
+    }
+
+    .postPage p button {
+        font-size: .75em;
+        border-radius: 1px;
+        border-color: black;
+        padding: .75em;
+        display: block;
+        margin: 5em auto;
+    }
+
     .postPage textarea {
         border-top: 1px solid black;
         margin: 1em;
@@ -351,11 +374,20 @@ a {
     margin: 6em auto;
     width: 40em;
 }
-    .upload * {
+    .upload form *{
         width: 100%;
     }
-    .upload div {
+    .upload form > div {
+        width: inherit;
         padding-bottom: 1em;
+    }
+    .upload .toolBar {
+        width: inherit;
+        float: right;
+        text-align: right;
+    }
+    .upload .toolBar * {
+        width: fit-content;
     }
 
 
