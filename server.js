@@ -19,11 +19,11 @@ require('firebase/storage');
 
 const auth = firebase.auth();
 
-var bb = require('express-busboy');
-const Busboy = require('busboy');
+// var bb = require('express-busboy');
+// const Busboy = require('busboy');
 
 app.use(bodyParser.json());
-bb.extend(app);
+// bb.extend(app);
 
 const database = firebase.database();
 const posts_ref = database.ref('Posts');
@@ -77,13 +77,13 @@ const storageRef = firebase.storage().ref();
 
 
 
-auth.signInAnonymously().catch(function(error) {
-  // Handle Errors here.
-  console.log("error");
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // ...
-});
+// auth.signInAnonymously().catch(function(error) {
+//   // Handle Errors here.
+//   console.log("error");
+//   var errorCode = error.code;
+//   var errorMessage = error.message;
+//   // ...
+// });
 
 auth.onAuthStateChanged(function(user) {
   if (user) {
@@ -211,7 +211,7 @@ app.post('/loadMore', (req, res) => {
 
 const util = require('util')
 app.post('/upload', (req) => {
-    console.log(req.body.PostFile);
+    console.log(req.body);
     if(req.body.PostFile) {
         console.log("out");
         storageRef.put(req.body.PostFile).then(function(snapshot) {

@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from "axios";
 import { Document, Page } from 'react-pdf';
+const firebase = require("firebase");
+
+TEST TEST TEST 
 
 export class Feed extends React.Component {
     constructor(props) {
@@ -23,16 +26,30 @@ export class Feed extends React.Component {
     async loadFeed() {
         let self = this;
         self.setState({isLoaded: false});
-        axios.post('/feed')
-            .then(function (response) {
-                if (response.data) {
-                    self.setState({data: response.data.data});
-                    self.setState({lastVisible: response.data.lastVisible, isLoaded: true});
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
+        // axios.post('https://us-central1-wmmdata-42f0b.cloudfunctions.net/feed')
+        //     .then(function (response) {
+        //         if (response.data) {
+        //             self.setState({data: response.data.data});
+        //             self.setState({lastVisible: response.data.lastVisible, isLoaded: true});
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+        const data = [];
+        console.log(firebase);
+        firebase.database().ref('Posts').orderByKey().limitToLast(10).once('value', function(snapshot) {
+            let lastVisible = "";
+            snapshot.forEach(function(childSnapshot) {
+                if (!lastVisible)
+                    lastVisible = childSnapshot.key;
+                let childData = childSnapshot.val();
+                childData["key"] = childSnapshot.key;
+                data.push(childData);
             });
+            self.setState({data: data.reverse()});
+            self.setState({lastVisible: lastVisible, isLoaded: true});
+        });
     }
 
     componentDidMount() {
@@ -56,18 +73,37 @@ export class Feed extends React.Component {
         console.log("called")
         let self = this;
         self.setState({isLoaded: false});
-        axios.post('/loadMore', {
-            lastVisible: self.state.lastVisible
-        })
-            .then(function (response) {
-                if (response.data.data.length > 0) {
-                    self.setState({data: self.state.data.concat(response.data.data)});
-                    self.setState({lastVisible: response.data.lastVisible, isLoaded: true})
+        // axios.post('https://us-central1-wmmdata-42f0b.cloudfunctions.net/loadMore', {
+        //     lastVisible: self.state.lastVisible
+        // })
+        //     .then(function (response) {
+        //         if (response.data.data.length > 0) {
+        //             self.setState({data: self.state.data.concat(response.data.data)});
+        //             self.setState({lastVisible: response.data.lastVisible, isLoaded: true})
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+
+        const data = [];
+        const lowerValue = this.state.lastVisible;
+        firebase.database().ref('Posts').orderByKey().endAt(lowerValue).limitToLast(11).once('value', function(snapshot) {
+            let lastVisible = "";
+            snapshot.forEach(function(childSnapshot) {
+                if (!lastVisible)
+                    lastVisible = childSnapshot.key;
+                if (lowerValue !== childSnapshot.key) {
+                    const childData = childSnapshot.val();
+                    childData["key"] = childSnapshot.key;
+                    data.push(childData);
                 }
-            })
-            .catch(function (error) {
-                console.log(error);
             });
+            if (data.length) {
+                self.setState({data: self.state.data.concat(data.reverse())});
+                self.setState({lastVisible: lastVisible, isLoaded: true})
+            }
+        });
     }
 
     currentDate() {

@@ -3,6 +3,7 @@ import axios from "axios/index";
 // import Edit from 'react-icons/lib/md/edit';
 // import Delete from 'react-icons/lib/md/delete';
 import { Document, Page } from 'react-pdf';
+const firebase = require("firebase");
 
 export class Edit extends React.Component {
     constructor(props) {
@@ -77,6 +78,49 @@ export class Edit extends React.Component {
         this.setState({data: dataCopy});
     }
 
+    fileSelectedHandler = event => {
+        this.setState({
+            selectedFile: event.target.files[0]
+        })
+    }
+
+    fileUploadHandler = () => {
+        // let self = this;
+        // console.log(fd);
+        // const fd = new FormData();
+        // fd.append('image', this.state.selectedFile);
+        let file = this.state.selectedFile;
+        let filename = file.name;
+        let imageStorage = firebase.storage().ref(filename);
+        let uploadTask = imageStorage.put(file);
+        
+        uploadTask.on('state_changed', function(snapshot) {
+            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                    console.log('Upload is paused');
+                    break;
+                case firebase.storage.TaskState.RUNNING: // or 'running'
+                    console.log('Upload is running');
+                    break;
+            }
+        }, function (error) {
+            window.alert("Unauthorized or file is larger than 50kb");
+        }, function () {
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                console.log('File available at', downloadURL);
+                console.log(filename.split('.').pop()," : ",filename.split('.').pop() == 'pdf');
+                let add = "";
+                if (filename.split('.').pop() == 'pdf') 
+                    add = '<button><a href=\"' + downloadURL + '\">Open Zine</a></button>';
+                else 
+                    add = '<img src=\"' + downloadURL + '\" alt=\"Montecito Album Cover\">';
+                document.getElementById('body').value += add;
+            });
+        });
+    }
+
     render() {
         return (
             <div className="postPage">
@@ -99,6 +143,10 @@ export class Edit extends React.Component {
                             {/*<input style={{border: 'none'}}type="file" className="form-control" id="file" aria-describedby="emailHelp"/>*/}
                         {/*</div>*/}
                         <div className="form-group">
+                            <div className="toolBar">
+                                <label><input onChange={this.fileSelectedHandler} type="file" className="form-control" id="file"/></label>
+                                <button type="button" onClick= {this.fileUploadHandler}>Add Image</button>
+                            </div>
                             <label htmlFor="body">Body</label>
                             <textarea className="form-control" rows="5" id="body" required
                                       name="Body" value= {this.state.data.Body} onChange={(value) => this.onChange(value)}/>

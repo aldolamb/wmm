@@ -1,8 +1,7 @@
 import React from 'react';
 import axios from "axios/index";
-// import Edit from 'react-icons/lib/md/edit';
-// import Delete from 'react-icons/lib/md/delete';
-import { Document, Page } from 'react-pdf';
+// import { Document, Page } from 'react-pdf';
+const firebase = require("firebase");
 
 export class Post extends React.Component {
     constructor(props) {
@@ -19,17 +18,21 @@ export class Post extends React.Component {
 
     async loadFeed() {
         let self = this;
-        axios.post('/singlePost', {
-            postID: self.state.postID
-        })
-            .then(function (response) {
-                if (response.data) {
-                    self.setState({data: response.data});
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        // axios.post('https://us-central1-wmmdata-42f0b.cloudfunctions.net/singlePost', {
+        //     postID: self.state.postID
+        // })
+        //     .then(function (response) {
+        //         if (response.data) {
+        //             self.setState({data: response.data});
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+        // const data = [];
+        firebase.database().ref('Posts').child(this.state.postID).once('value', function(snapshot) {
+            self.setState({data: snapshot.val()});
+        });
     }
 
     range(pages) {

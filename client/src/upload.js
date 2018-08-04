@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+const firebase = require("firebase");
 
 export class Upload extends React.Component {
     state = {
@@ -49,25 +50,40 @@ export class Upload extends React.Component {
 
     fileUploadHandler = () => {
         // let self = this;
-        console.log(fd);
-        const fd = new FormData();
-        fd.append('image', this.state.selectedFile);
-        axios.post('/uploadImage', fd)
-                .then(function (response) {
-                    if (response.data.msg === 'success') {
-                        alert("Message Sent.");
-                        // self.resetForm();
-                    } else if (response.data.msg === 'fail') {
-                        alert("Message failed to send.")
-                    } else {
-                        console.log(response.data.msg);
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+        // console.log(fd);
+        // const fd = new FormData();
+        // fd.append('image', this.state.selectedFile);
+        let file = this.state.selectedFile;
+        let filename = file.name;
+        let imageStorage = firebase.storage().ref(filename);
+        let uploadTask = imageStorage.put(file);
+        
+        uploadTask.on('state_changed', function(snapshot) {
+            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                    console.log('Upload is paused');
+                    break;
+                case firebase.storage.TaskState.RUNNING: // or 'running'
+                    console.log('Upload is running');
+                    break;
+            }
+        }, function (error) {
+            window.alert("Unauthorized or file is larger than 50kb");
+        }, function () {
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                console.log('File available at', downloadURL);
+                console.log(filename.split('.').pop()," : ",filename.split('.').pop() == 'pdf');
+                let add = "";
+                if (filename.split('.').pop() == 'pdf') 
+                    add = '<button><a href=\"' + downloadURL + '\">Open Zine</a></button>';
+                else 
+                    add = '<img src=\"' + downloadURL + '\" alt=\"Montecito Album Cover\">';
+                document.getElementById('body').value += add;
+            });
+        });
     }
-
 
     // async uploadFile() {
     //     // const file = document.getElementById('file').files[0];
@@ -124,11 +140,6 @@ export class Upload extends React.Component {
     // }
 
     render () {
-        // document.getElementById("file").onchange = function() {
-        //     // document.getElementById("form").submit();
-        //     console.log("added" + document.getElementById("form").value)
-        // };
-
         return (
             <div className="upload">
                 {/*{sessionStorage.getItem("loggedIn") &&*/}
@@ -148,7 +159,7 @@ export class Upload extends React.Component {
                         <div className="form-group">
                             <div className="toolBar">
                                 <label><input onChange={this.fileSelectedHandler} type="file" className="form-control" id="file"/></label>
-                                <button onClick= {this.fileUploadHandler}>Add Image</button>
+                                <button type="button" onClick= {this.fileUploadHandler}>Add Image</button>
                             </div>
                             <label htmlFor="body">Body</label>
                             <textarea className="form-control" rows="5" id="body" required/>

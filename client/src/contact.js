@@ -9,22 +9,23 @@ export class Contact extends React.Component {
         const message = document.getElementById('message').value;
         const self = this;
         e.preventDefault();
-        await axios.post('/send', {
-            name: name,
-            email: email,
-            messsage: message
-        })
-            .then(function (response) {
-                if (response.data.msg === 'success') {
-                    alert("Message Sent.");
-                    self.resetForm();
-                } else if (response.data.msg === 'fail') {
-                    alert("Message failed to send.")
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        alert("Failed to send");
+        // await axios.post('/send', {
+        //     name: name,
+        //     email: email,
+        //     messsage: message
+        // })
+        //     .then(function (response) {
+        //         if (response.data.msg === 'success') {
+        //             alert("Message Sent.");
+        //             self.resetForm();
+        //         } else if (response.data.msg === 'fail') {
+        //             alert("Message failed to send.")
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
     }
 
     static resetForm () {
