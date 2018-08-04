@@ -3,8 +3,6 @@ import axios from "axios";
 import { Document, Page } from 'react-pdf';
 const firebase = require("firebase");
 
-TEST TEST TEST 
-
 export class Feed extends React.Component {
     constructor(props) {
         super(props);
