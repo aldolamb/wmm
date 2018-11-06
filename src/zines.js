@@ -1,6 +1,4 @@
 import React from 'react';
-import cover from './img/zineCover.jpeg';
-import page1 from './img/page1.jpeg';
 
 export class Zines extends React.Component {
 
