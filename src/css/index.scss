@@ -85,9 +85,6 @@ body * {
   perspective: 400px;
 
   position: relative;
-  /*background: radial-gradient(circle at 50% 40%, #fcfcfc, #efeff1 66%, #9b5050 100%);*/
-  background: -webkit-radial-gradient(50% 40%, circle, rgba(256, 256, 256, 0), rgba(239, 239, 241, .1) 66%, rgba(155, 80, 80, 1) 100%);
-  background: -o-radial-gradient(50% 40%, circle, rgba(256, 256, 256, 0), rgba(239, 239, 241, .1) 66%, rgba(155, 80, 80, 1) 100%);
   background: radial-gradient(circle at 50% 40%, rgba(256, 256, 256, 0), rgba(239, 239, 241, .1) 66%, rgba(155, 80, 80, 1) 100%);
   background: -webkit-radial-gradient(circle at 50% 40%, rgba(256, 256, 256, 0), rgba(239, 239, 241, .1) 66%, rgba(155, 80, 80, 1) 100%);
   background: -o-radial-gradient(circle at 50% 40%, rgba(256, 256, 256, 0), rgba(239, 239, 241, .1) 66%, rgba(155, 80, 80, 1) 100%);
@@ -167,8 +164,6 @@ body * {
   -webkit-border-radius: 50%;
   top: 18.75%;
   left: 18.75%;
-  /*background: rgba(255, 255, 255, 0.2);*/
-  /*background: rgba(256, 256, 256, .1);*/
   background-image: radial-gradient(rgba(255, 255, 255, .5) 0%, rgba(255, 255, 255, 0) 80%);
   background-image: -webkit-radial-gradient(rgba(255, 255, 255, .5) 0%, rgba(255, 255, 255, 0) 80%);
   background-image: -o-radial-gradient(rgba(255, 255, 255, .5) 0%, rgba(255, 255, 255, 0) 80%);
@@ -216,6 +211,14 @@ body * {
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
+
+  iframe, video, img {
+    position: absolute;
+    width: 300px;
+    height: inherit;
+    z-index: -1;
+    border-radius: 50%;
+  }
 }
 .stageAnimation {
   animation: blinking 11s infinite;
@@ -267,13 +270,6 @@ body * {
 }
 
 .stage {
-  iframe, video, img {
-    position: absolute;
-    width: 300px;
-    height: inherit;
-    z-index: -1;
-    border-radius: 50%;
-  }
 }
 
 @-webkit-keyframes blinking {
@@ -410,7 +406,6 @@ header {
   font-size: .9em;
   color: #aaaaaa;
   z-index: 2;
-
   .wmmList {
     position: fixed;
     left: 0;
@@ -420,10 +415,14 @@ header {
       list-style-type: none;
       margin: 0;
       padding: 0;
-      /*height: 1em;*/
       float: left;
-      &:hover {
-        color: white;
+      li {
+        padding: 0 .3em;
+        font-size: 1.7em;
+        line-height: 1.5em;
+        &:hover {
+          color: white;
+        }
       }
     }
   }
@@ -449,7 +448,7 @@ header {
   }
 }
 
-.zines {
+.drop {
   position: absolute;
   margin: auto;
   top: 0;
@@ -483,38 +482,35 @@ header {
     -ms-transform-origin: 50%;
     transform-origin: 50%;
   }
-  .cover {
-    /*width: 100px;*/
-    position: absolute;
-    /*margin: auto;*/
-    max-height: 80vh;
-    /*width: 2000px;*/
+}
+
+.zines {
+  .pages {
+    height: 60vh;
     width: -webkit-max-content;
     width: -moz-max-content;
     width: max-content;
-    top: 10vh;
-    /*right: 0;*/
-    /*bottom: 0;*/
-    /*left: 15vw;*/
-    margin: 0 15vw;
-    /*text-align: center;*/
+    top: 20vh;
+    left: 0;
+    padding: 20vh 20vw;
     display: inline-block;
 
     img {
-      height: 80vh;
+      height: inherit;
       display: inline-block;
-      /*display: block;*/
-      /*margin: auto;*/
     }
   }
 }
 
+
 @media only screen and (min-width: 400px) {
-  footer .large {
-    display: block;
-  }
-  footer .small {
-    display: none;
+  footer {
+    .large {
+      display: block;
+    }
+    .small {
+      display: none;
+    }
   }
 }
 
@@ -525,22 +521,12 @@ header {
     font-size: 1.4em;
     line-height: 1.3em;
   }
-  footer .large {
-    display: none;
-  }
-  footer .small {
-    display: block;
+  footer {
+    .large {
+      display: none;
+    }
+    .small {
+      display: block;
+    }
   }
 }
-
-/*li a {*/
-/*display: block;*/
-/*color: white;*/
-/*text-align: center;*/
-/*padding: 16px;*/
-/*text-decoration: none;*/
-/*}*/
-
-/*li a:hover {*/
-/*background-color: #111111;*/
-/*}*/

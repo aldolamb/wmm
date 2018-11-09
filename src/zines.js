@@ -55,12 +55,7 @@ export class Zines extends React.Component {
 
     render() {
         return (
-            <div className="zines" onMouseMove={this._onMouseMove.bind(this)} >
-                {/*<h1>11/09/18</h1>*/}
-                {/*<div className="cover">*/}
-                    {/*<img src={cover}/>*/}
-                    {/*<img src={page1}/>*/}
-                {/*</div>*/}
+            <div className="drop" onMouseMove={this._onMouseMove.bind(this)} >
                 <div style={{display: "flex", alignItems: "center", justifyContent: "center" }}>
                     {this.createDates()}
                 </div>

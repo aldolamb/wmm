@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Zines } from "./zines";
+import { Zine } from "./zine";
 import { Header } from "./header";
 import { Footer } from "./footer";
 import { Main } from "./main";
+import "./ignore/firebaseConfig";
 
 export class WMM extends React.Component {
     render() {
@@ -12,6 +14,7 @@ export class WMM extends React.Component {
                 <Header/>
                     <Router>
                         <Switch>
+                            <Route path='/zines/:zineID'        component={Zine} />
                             <Route path='/zines'                component={Zines} />
                             <Route exact path='/'               component={Main} />
                         </Switch>
