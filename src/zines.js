@@ -32,7 +32,7 @@ export class Zines extends React.Component {
         console.log(page);
         return (
         <div class="page">
-            <p key={"index-"+Object.values(page)}>{index+1}</p>
+            {/*<p key={"index-"+Object.values(page)}>{index+1}</p>*/}
             <a href={"./zines/"+(index+1)}><img src={Object.values(page)} key={Object.values(page)} alt={"Zine Page "+index}/></a>
             <p key={"release-"+Object.values(page)}>{Object.keys(page)}</p>
         </div>);
