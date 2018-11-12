@@ -35,7 +35,7 @@ export class Zine extends React.Component {
 
     render() {
         return (
-            <div className="zines">
+            <div className="zine">
                 <div className="pages">
                     {this.state.data.pages && this.state.data.pages.map((page, index) => this.createPage(page, index))}
                 </div>

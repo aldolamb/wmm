@@ -1,63 +1,48 @@
 import React from 'react';
+const firebase = require("firebase");
 
 export class Zines extends React.Component {
-
-    componentDidMount() {
-        // When the component is mounted, add your DOM listener to the "nv" elem.
-        // (The "nv" elem is assigned in the render function.)
-        window.removeEventListener("deviceorientation", this.handleOrientation, true);
-        window.addEventListener("deviceorientation", this.handleOrientation, true);
+    constructor(props) {
+        super(props);
+        this.state = {};
     }
 
-    componentWillUnmount() {
-        // Make sure to remove the DOM listener when the component is unmounted.
-        window.removeEventListener("deviceorientation", this.handleOrientation, true);
+    componentWillMount() {
+        this.loadFeed();
     }
 
-    handleOrientation(event) {
-        // const absolute = event.absolute;
-        // const alpha    = event.alpha;
-        let beta;
-        let gamma;
-        if (window.matchMedia("(orientation: portrait)").matches) {
-            beta = event.beta * 2;
-            gamma = event.gamma * 2;
-        } else {
-            beta = event.gamma * -2;
-            gamma = event.beta * 2;
-        }
-
-        for (let i = 1; i < 50; i++) {
-            document.getElementById("date"+i).style.transform = `translate(${(gamma-10)*i}px, ${(beta+7)*i}px)`
-        }
+    async loadFeed() {
+        let self = this;
+        firebase.firestore().collection("zines").doc("previews").get().then(snapshot => {
+            if (snapshot.exists) {
+                // snapshot.data().frontPages.map((item) => console.log(Object.keys(item)))
+                // console.log(snapshot.data().frontPages)
+                self.setState({pages: snapshot.data().frontPages});
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch(err => {
+            console.log('Error getting documents', err);
+        });
     }
 
-    _onMouseMove(e) {
-        const xDif = (e.clientX - window.innerWidth/2)/window.innerWidth * 100;
-        const yDif = (e.clientY - window.innerHeight/2)/window.innerHeight * 100;
 
-        for (let i = 1; i < 50; i++) {
-            // console.log(`translate(${xDif*i}, ${yDif*i})`);
-            document.getElementById("date"+i).style.transform = `translate(${xDif*-i}px, ${yDif*-i}px)`;
-            document.getElementById("date"+i).style.webkitTransform = `translate(${xDif*-i}px, ${yDif*-i}px)`;
-        }
-    }
-
-    createDates = () => {
-        let dates = [];
-
-        // Outer loop to create parent
-        for (let i = 1; i < 50; i++) {
-            dates.push(<h1 key={"date"+i} id={"date"+i} style={{opacity: 1 - (i/50), transition: `transform ${i/10}s linear`, transform: `translate(${-10*i}px, ${7*i}px)`}}>11/09/18</h1>)
-        }
-        return dates;
+    createPage = (page, index) => {
+        console.log(page);
+        return (
+        <div class="page">
+            <p key={"index-"+Object.values(page)}>{index+1}</p>
+            <a href={"./zines/"+(index+1)}><img src={Object.values(page)} key={Object.values(page)} alt={"Zine Page "+index}/></a>
+            <p key={"release-"+Object.values(page)}>{Object.keys(page)}</p>
+        </div>);
     };
 
     render() {
         return (
-            <div className="drop" onMouseMove={this._onMouseMove.bind(this)} >
-                <div style={{display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    {this.createDates()}
+            <div className="zines">
+                <div className="pages">
+                    {this.state.pages && this.state.pages.map((page, index) => this.createPage(page, index))}
                 </div>
             </div>
         )

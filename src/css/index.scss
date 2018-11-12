@@ -487,6 +487,39 @@ header {
 .zines {
   .pages {
     height: 60vh;
+    //width: -webkit-max-content;
+    //width: -moz-max-content;
+    //width: max-content;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    padding: 0 20vw;
+    position: absolute;
+    display: inline-block;
+    box-sizing: content-box;
+    text-align: center;
+    .page {
+      box-sizing: border-box;
+      height: inherit;
+      padding: 0 1em;
+      display: inline-block;
+      p {
+        line-height: 5%;
+      }
+      img {
+        //box-sizing: border-box;
+        height: 90%;
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.zine {
+  .pages {
+    height: 60vh;
     width: -webkit-max-content;
     width: -moz-max-content;
     width: max-content;
