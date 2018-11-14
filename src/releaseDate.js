@@ -43,12 +43,12 @@ export class ReleaseDate extends React.Component {
         }
     }
 
-    createDates = () => {
+    createDates = (msg) => {
         let dates = [];
 
         // Outer loop to create parent
         for (let i = 1; i < 50; i++) {
-            dates.push(<h1 key={"date"+i} id={"date"+i} style={{opacity: 1 - (i/50), transition: `transform ${i/10}s linear`, transform: `translate(${-10*i}px, ${7*i}px)`}}>11/09/18</h1>)
+            dates.push(<h1 key={"date"+i} id={"date"+i} style={{opacity: 1 - (i/50), transition: `transform ${i/10}s linear`, transform: `translate(${-10*i}px, ${7*i}px)`}}>{msg}</h1>)
         }
         return dates;
     };
@@ -57,7 +57,7 @@ export class ReleaseDate extends React.Component {
         return (
             <div className="drop" onMouseMove={this._onMouseMove.bind(this)} >
                 <div style={{display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    {this.createDates()}
+                    {this.createDates("COMING SOON")}
                 </div>
             </div>
         )

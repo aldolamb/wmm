@@ -45,6 +45,7 @@ export class Header extends React.Component {
                 </a>
                 <div className="more">
                     <a href="/zines">Zines</a>
+                    <a href="/store">Store</a>
                     {/*<a href="https://store.weakmindedmasses.com/" target="_blank">Store</a>*/}
                 </div>
             </header>
